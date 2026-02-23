@@ -15,8 +15,6 @@ Click the badge above to open `access_computation.ipynb` in JupyterLab. All depe
 The `access_computation.ipynb` notebook demonstrates:
 - **Ground Station Access Analysis**: Computing satellite visibility windows with 5° minimum elevation
 - **Zone of Interest Monitoring**: Special analysis for France with 30° minimum elevation
-- **Contact Sequence Planning**: Finding next available ground stations after zone passes
-- **Latency Statistics**: Time analysis between zone coverage and ground station contacts
 
 ## Local Setup (Optional)
 
@@ -66,8 +64,6 @@ The notebook is organized into clear sections:
 6. **Access Computation**: Calculate visibility windows
 7. **Geometry**: Compute satellite position during passes
 8. **Visualization**: Interactive map showing stations and access paths
-9. **Contact Planning**: Analyze next ground station contacts after zone passes
-10. **Statistics**: Latency analysis and station frequency
 
 ## Configuration
 
@@ -85,16 +81,8 @@ stations:
 
 Adjust elevation requirements in the notebook:
 - Ground stations: 5° minimum elevation
-- Zone of interest: 30° minimum elevation (can be modified)
+- Zone of interest
 
-## Key Results
-
-From the analysis of a 9-day period (2018-01-01 to 2018-01-10):
-
-- **Ground Stations**: 328 total access windows across 8 stations
-- **France Zone**: 15 access windows (higher elevation requirement reduces coverage)
-- **Most Frequent Next Contact**: Fairbanks, Alaska (34.9% of post-France contacts)
-- **Average Latency**: ~19 minutes between France LOS and next ground station AOS
 
 ## Troubleshooting
 
