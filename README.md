@@ -1,195 +1,116 @@
 # Open Space Toolkit - Mission Manager
 
-This project provides a Docker environment for working with the [Open Space Toolkit (OSTk)](https://github.com/open-space-collective/open-space-toolkit) in JupyterLab.
+Analyze satellite access patterns for ground stations and zones of interest using the [Open Space Toolkit (OSTk)](https://github.com/open-space-collective/open-space-toolkit).
 
-## Prerequisites
+## Quick Start with Binder (No Installation Required)
 
-Before you begin, make sure you have the following installed on your local machine:
+Launch this repository instantly in your browser:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://2i2c.mybinder.org/v2/gh/ValentineBrgs/coding_challenge_customer_sucess/main?labpath=access_computation.ipynb)
+
+Click the badge above to open `access_computation.ipynb` in JupyterLab. All dependencies are pre-installed and ready to use.
+
+## What's Inside
+
+The `access_computation.ipynb` notebook demonstrates:
+- **Ground Station Access Analysis**: Computing satellite visibility windows with 5° minimum elevation
+- **Zone of Interest Monitoring**: Special analysis for France with 30° minimum elevation
+- **Contact Sequence Planning**: Finding next available ground stations after zone passes
+- **Latency Statistics**: Time analysis between zone coverage and ground station contacts
+
+## Local Setup (Optional)
+
+### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
-- [Git](https://git-scm.com/downloads)
-- [GNU Make](https://www.gnu.org/software/make/) (usually pre-installed on macOS and Linux)
+- [Make](https://www.gnu.org/software/make/) (pre-installed on macOS/Linux)
 
 ## Getting Started
 
-### Quick Start (Using Makefile - Recommended)
-
-The easiest way to get started is using the Makefile:
+### Using Makefile (Recommended)
 
 ```bash
-# Navigate to your project directory
-cd /Users/bourgeoisvalentine/workspace/coding_challenge_mission_manager
-
-# Build and run JupyterLab in one command
+# Build and run JupyterLab
 make run-jupyter
 ```
 
-Once the container is running, open your web browser and navigate to:
+Access JupyterLab at `http://localhost:8888/lab`
 
-```
-http://localhost:8888/lab
-```
+**Common Commands:**
+- `make run-jupyter` - Build and start JupyterLab
+- `make stop` - Stop the container
+- `make rebuild` - Clean rebuild
+- `make help` - Show all commands
 
-You should see the JupyterLab interface with the `template.ipynb` notebook ready to use.
-
-### Available Make Commands
-
-Run `make help` to see all available commands:
-
-- `make build` - Build the Docker image
-- `make run` or `make run-jupyter` - Build and run JupyterLab server
-- `make run-detached` - Run JupyterLab in background mode
-- `make stop` - Stop the running container
-- `make clean` - Stop container and remove Docker image
-- `make rebuild` - Clean and rebuild everything
-- `make shell` - Open a shell in the running container
-- `make logs` - Show container logs
-- `make ps` - Show running containers
-
-### Manual Setup (Without Makefile)
-
-If you prefer to use Docker commands directly:
-
-#### 1. Build the Docker Image
+### Using Docker Directly
 
 ```bash
+# Build the image
 docker build -t ostk-mission-manager .
-```
 
-This will:
-
-- Install Python 3.11
-- Download and cache Open Space Toolkit data
-- Install JupyterLab and necessary dependencies
-- Set up the `template.ipynb` notebook
-
-#### 2. Run the Docker Container
-
-Start the JupyterLab server inside Docker:
-
-```bash
+# Run JupyterLab
 docker run -it --rm -p 8888:8888 -v $(pwd):/app ostk-mission-manager
 ```
 
-**Command Breakdown:**
+Access at `http://localhost:8888/lab`
 
-- `-it`: Run interactively with a terminal
-- `--rm`: Automatically remove the container when it exits
-- `-p 8888:8888`: Map port 8888 from the container to your local machine
-- `-v $(pwd):/app`: Mount your current directory to `/app` in the container (so your work is saved locally)
+## Notebook Structure
 
-#### 3. Access JupyterLab
+The notebook is organized into clear sections:
 
-Once the container is running, open your web browser and navigate to:
+1. **Setup**: Import libraries and configure environment
+2. **Visibility Criteria**: Define elevation requirements (5° for ground stations, 30° for France)
+3. **Ground Stations**: Configure 8 global tracking stations
+4. **Zone of Interest**: Configure France with stricter visibility
+5. **Orbit Definition**: Sun-synchronous orbit at 500 km
+6. **Access Computation**: Calculate visibility windows
+7. **Geometry**: Compute satellite position during passes
+8. **Visualization**: Interactive map showing stations and access paths
+9. **Contact Planning**: Analyze next ground station contacts after zone passes
+10. **Statistics**: Latency analysis and station frequency
 
-```
-http://localhost:8888/lab
-```
+## Configuration
 
-You should see the JupyterLab interface with the `template.ipynb` notebook ready to use.
+### Ground Stations (stations.yaml)
 
-## Using the Template Notebook
-
-The `template.ipynb` file is a starter notebook where you can:
-
-- Import Open Space Toolkit libraries
-- Write and execute Python code for space engineering applications
-- Experiment with orbits, attitudes, and other astrodynamics concepts
-
-## Customizing Your Environment
-
-### Adding More OSTk Libraries
-
-To add specific Open Space Toolkit libraries, edit the `requirements.txt` file and uncomment or add the libraries you need:
-
-```txt
-open-space-toolkit-core
-open-space-toolkit-io
-open-space-toolkit-mathematics
-open-space-toolkit-physics
-open-space-toolkit-astrodynamics
-```
-
-Then rebuild the Docker image:
-
-```bash
-make rebuild
-```
-
-Or manually:
-
-```bash
-docker build -t ostk-mission-manager .
-```
-
-### Persisting Your Work
-
-When you run the container with the `-v $(pwd):/app` flag, any notebooks you create or modify will be saved to your local directory. This means your work persists even after stopping the container.
-
-## Stopping the Container
-
-### Using Makefile:
-
-```bash
-make stop
-```
-
-### Manual Method:
-
-To stop the JupyterLab server:
-
-1. Press `Ctrl+C` in the terminal where the container is running
-2. The container will automatically be removed (because of the `--rm` flag)
-
-## Alternative: Using docker-compose (Optional)
-
-You can also create a `docker-compose.yml` file for easier management:
+Modify `stations.yaml` to add/remove ground stations:
 
 ```yaml
-version: "3.8"
-
-services:
-  jupyter:
-    build: .
-    ports:
-      - "8888:8888"
-    volumes:
-      - .:/app
-    container_name: ostk-jupyter
+stations:
+  Station_Name:
+    lla: [latitude, longitude, altitude_meters]
 ```
 
-Then run:
+### Visibility Criteria
 
-```bash
-docker-compose up
-```
+Adjust elevation requirements in the notebook:
+- Ground stations: 5° minimum elevation
+- Zone of interest: 30° minimum elevation (can be modified)
+
+## Key Results
+
+From the analysis of a 9-day period (2018-01-01 to 2018-01-10):
+
+- **Ground Stations**: 328 total access windows across 8 stations
+- **France Zone**: 15 access windows (higher elevation requirement reduces coverage)
+- **Most Frequent Next Contact**: Fairbanks, Alaska (34.9% of post-France contacts)
+- **Average Latency**: ~19 minutes between France LOS and next ground station AOS
 
 ## Troubleshooting
 
-### Port 8888 Already in Use
-
-If port 8888 is already in use, you can map to a different port:
-
+**Port 8888 in use?** Change the port:
 ```bash
 docker run -it --rm -p 8889:8888 -v $(pwd):/app ostk-mission-manager
 ```
-
-Then access JupyterLab at `http://localhost:8889/lab`
-
-### Permission Issues
-
-If you encounter permission issues with mounted volumes, try running with your user ID:
-
-```bash
-docker run -it --rm -p 8888:8888 -v $(pwd):/app --user $(id -u):$(id -g) ostk-mission-manager
-```
+Access at `http://localhost:8889/lab`
 
 ## Resources
 
-- [Open Space Toolkit GitHub](https://github.com/open-space-collective/open-space-toolkit)
-- [Open Space Toolkit Documentation](https://github.com/open-space-collective/open-space-toolkit/tree/main/docs)
+- [Open Space Toolkit](https://github.com/open-space-collective/open-space-toolkit)
+- [OSTk Astrodynamics Docs](https://open-space-collective.github.io/open-space-toolkit-astrodynamics/)
 - [JupyterLab Documentation](https://jupyterlab.readthedocs.io/)
+- [2i2c Binder Service](https://2i2c.org/)
 
 ## License
 
-This project uses the Open Space Toolkit, which is licensed under the Apache License 2.0.
+This project uses the Open Space Toolkit, licensed under Apache License 2.0.
