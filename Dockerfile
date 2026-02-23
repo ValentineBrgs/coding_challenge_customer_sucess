@@ -53,8 +53,10 @@ ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 ## Copy template notebook
 COPY --chown=${USER_UID}:${USER_GID} access_computation.ipynb /app/access_computation.ipynb
 
+
 ## Copy station document
 COPY --chown=${USER_UID}:${USER_GID} stations.json /app/stations.json
+
 
 ## Change default entrypoint folder to /app
 WORKDIR /app
