@@ -1,0 +1,23 @@
+stations:
+
+  "Kourou (Guyane Française)":
+    lla: [5.2514, -52.8047, 10.0]
+  "Tsukuba (Japon)":
+    lla: [36.1030, 140.0870, 31.0]
+  "Bangalore (Inde)":
+    lla: [13.0350, 77.5110, 920.0]
+  "Ottawa (Canada)":
+    lla: [45.4030, -75.7410, 70.0]
+  "Fairbanks (Alaska, USA)":
+    lla: [64.9780, -147.4970, 136.0]
+  "Borowiec (Pologne)":
+    lla: [52.2760, 17.0740, 92.0]
+  "Accra (Ghana)":
+    lla: [5.6037, -0.1870, 68.0]
+  "Alice Springs (Australia)":
+        lla: [-23.6980, 133.8807, 545.0]
+  "Tauranga (New Zealand)":
+    lla: [-37.6870, 176.1654, 5.0]
+
+  "France":
+    lla: [46.2276, 2.2137, 375.0]
