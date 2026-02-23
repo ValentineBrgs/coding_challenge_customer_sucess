@@ -1,0 +1,17 @@
+# JupyterLab
+jupyterlab>=4.0.0
+ipython>=8.24
+
+# Open Space Toolkit libraries
+open-space-toolkit-core
+open-space-toolkit-io
+open-space-toolkit-mathematics
+open-space-toolkit-physics
+open-space-toolkit-astrodynamics
+
+# Common scientific libraries
+numpy
+matplotlib
+pandas
+plotly
+itur
